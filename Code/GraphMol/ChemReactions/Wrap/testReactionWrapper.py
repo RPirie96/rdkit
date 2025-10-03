@@ -730,6 +730,12 @@ M  END
       _rxn.Initialize()
       _reacts = [Chem.MolToSmarts(r) for r in _rxn.GetReactants()]
       _prods = [Chem.MolToSmarts(p) for p in _rxn.GetProducts()]
+  
+  def testReactionFromSmiles(self):
+    smiles = "CC(=O)O.OCC>Cl.OCC>CC(=O)OCC"
+    rxn_smi = rdChemReactions.ReactionFromSmiles(smiles)
+    rxn_smarts = rdChemReactions.ReactionFromSmarts(smiles, useSmiles=True)
+    self.assertEqual(rdChemReactions.ReactionToSmiles(rxn_smi), rdChemReactions.ReactionToSmiles(rxn_smarts))
 
   @unittest.skipUnless(hasattr(rdChemReactions, 'ReactionFromPNGFile'),
                        "RDKit not built with iostreams support")
